@@ -1,14 +1,21 @@
 const router = require("express").Router();
 
 /**
+ * @typedef DentistsQueryParams
+ * @property {string} [start] 
+ * @property {string} [end] 
+ * @property {string} [filter] 
+ */
+
+/**
  * Get /v1/dentists
  * @summary Returns all dentists
  * @tags dentists
+ * @param {DentistsQueryParams} query.start - all timeslots starting this time
+ * @param {DentistsQueryParams} query.end - all timeslots before this time
+ * @param {DentistsQueryParams} query.filter - filter dentists (e.g., only favorite dentists)
  * @return {object} 200 - Success response
  */
-router.get("/v1/dentists",
-    //TODO: not implemented yet
-);
 
 /**
  * Delete /v1/dentists/{dentistId}/timeslots/{timeslotId}
@@ -32,4 +39,16 @@ router.delete("/v1/dentists/:dentistId/timeslots/timeslotId",
 router.post("/v1/dentists/:dentistId/timeslots",
     //TODO: not implemented yet
 );
+
+/**
+ * Post /v1/dentists/ratings
+ * @summary Creates a new rating for dentist
+ * @tags dentists
+ * @return {object} 200 - Success response
+ * @return {object} 400 - Bad request response
+ */
+router.post("/v1/dentists/ratings",
+    //TODO: not implemented yet
+);
+
 
