@@ -4,6 +4,7 @@ import expressJSDocSwagger from "express-jsdoc-swagger";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import MqttRequest from "mqtt-request"
+import pgp from "pg-promise"
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -12,6 +13,10 @@ const apiDocsRoute = "/api-docs";
 
 const client = mqtt.connect(process.env.BROKER_URL)
 const mqttReq = new MqttRequest.default(client);
+
+export const db = pgp({}) ({
+    connectionString: process.env.CONNECTION_STRING,
+})
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -52,12 +57,12 @@ app.get("/demo", (req, res) => {
         JSON.stringify({ message: "Hi from API-Gateway..." }))
 })
 
-
-client.on("connect", () => {
+client.on("connect", async () => {
     console.log("api-gateway connected to broker")
     console.log(`Broker URL: ${process.env.BROKER_URL}`)
 
-
+    await db.connect()
+    
     app.listen(port, () => {
         console.log(`API-Gateway running on http://localhost:${port}`)
         console.log(`API Docs running on http://localhost:${port}${apiDocsRoute}`)
