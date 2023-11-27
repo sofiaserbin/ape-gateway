@@ -15,21 +15,19 @@ Consider the following example:
  * @return {object} 400 - Bad request response
  */
 router.post("/login", async (req, res, next) => {
-  const { username, password } = req.body
-
   mqttReq.request(
     "v1/users/login",
     (payload) => {
       req.mqttResponse = payload
       return next()
     },
-    JSON.stringify({ username, password })
+    JSON.stringify(req.body)
   )
 })
 ```
 
 1. When a new request is received, a new MQTT message is published under the
-   topic `v1/users/login` with the payload `{ username, password }`.
+   topic `v1/users/login` with the payload of the HTTP request body.
 2. The response - received over MQTT - is then forwarded to the callback function.
 3. The callback function then sets the received response on the `req` object,
    so that the next middleware(s) can access it. Using `next()`, the next middleware
