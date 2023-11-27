@@ -83,14 +83,12 @@ router.get("/:userId/appointments", async (req, res) => {
  * @return {object} 400 - Bad request response
  */
 router.post("/login", async (req, res, next) => {
-    const { username, password } = req.body
-
     mqttReq.request("v1/users/login",
         (payload) => {
             req.mqttResponse = payload
             return next()
         },
-        JSON.stringify({ username, password })
+        JSON.stringify(req.body)
     )
 });
 
@@ -103,14 +101,12 @@ router.post("/login", async (req, res, next) => {
  * @return {object} 400 - Bad request response
  */
 router.post("/register", async (req, res, next) => {
-    const { username, password, name, role } = req.body;
-
     mqttReq.request("v1/users/register",
         (payload) => {
             req.mqttResponse = payload
             return next()
         },
-        JSON.stringify({ username, password, name, role })
+        JSON.stringify(req.body)
     )
 
 });
