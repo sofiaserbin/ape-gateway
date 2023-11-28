@@ -1,4 +1,6 @@
-const router = require("express").Router();
+import express from "express";
+const router = express.Router()
+import { mqttReq } from "../../index.js"
 
 /**
  * Get /v1/users/{userId}
@@ -7,19 +9,43 @@ const router = require("express").Router();
  * @return {object} 200 - Success response
  * @return {object} 404 - user id not found
  */
-router.get("/v1/users/:userId",
-    //TODO: not implemented yet
-);
- /**
- * Get /v1/users/{userId}/notifications
- * @summary Returns all notifications of a user by id
- * @tags users
- * @return {object} 200 - Success response
- * @return {object} 404 - user id not found
- */
-router.get("/v1/users/:userId/notifications",
-//TODO: not implemented yet
-);
+router.get("/:userId", async (req, res) => {
+
+    try {
+        const userID = req.params.id;
+        const userToFind = await Users.findById(userID);
+        if (!userToFind) {
+            res.status(404).json({ message: "User ID not found." });
+        }
+        res.status(200).json(userToFind);
+    } catch (err) {
+        res.status(500).json({ message: "Internal server error." })
+    }
+});
+
+/**
+* Get /v1/users/{userId}/notifications
+* @summary Returns all notifications of a user by id
+* @tags users
+* @return {object} 200 - Success response
+* @return {object} 404 - user id not found
+*/
+router.get("/:userId/notifications", async (req, res) => {
+
+    try {
+        const userID = req.params.id;
+        const userToFind = await Users.findById(userID);
+        if (!userToFind) {
+            res.status(404).json({ message: "User ID not found." })
+        }
+
+        const notifications = await Notifications.exec();
+        res.status(200).json(notifications);
+
+    } catch (err) {
+        res.status(500).json({ message: "Internal server error." })
+    }
+});
 
 
 /**
@@ -29,8 +55,23 @@ router.get("/v1/users/:userId/notifications",
  * @return {object} 200 - Success response
  * @return {object} 404 - user id not found
  */
-router.get("/v1/users/:userId/appointments",
-    //TODO: not implemented yet
+router.get("/:userId/appointments", async (req, res) => {
+
+    try {
+        const userID = req.params.id;
+        const userToFind = await Users.findById(userID);
+        if (!userToFind) {
+            res.status(404).json({ message: "User ID not found." })
+        }
+
+        const appointments = await Appointments.exec();
+        res.status(200).json(appointments);
+
+    } catch (err) {
+        res.status(500).json({ message: "Internal server error." })
+    }
+}
+
 );
 
 
@@ -41,9 +82,15 @@ router.get("/v1/users/:userId/appointments",
  * @return {object} 200 - Success response
  * @return {object} 400 - Bad request response
  */
-router.post("v1/users/login",
-    //TODO: not implemented yet
-);
+router.post("/login", async (req, res, next) => {
+    mqttReq.request("v1/users/login",
+        (payload) => {
+            req.mqttResponse = payload
+            return next()
+        },
+        JSON.stringify(req.body)
+    )
+});
 
 
 /**
@@ -53,12 +100,19 @@ router.post("v1/users/login",
  * @return {object} 201 - Success response
  * @return {object} 400 - Bad request response
  */
-router.post("/v1/users/register",
-    //TODO: not implemented yet
-);
+router.post("/register", async (req, res, next) => {
+    mqttReq.request("v1/users/register",
+        (payload) => {
+            req.mqttResponse = payload
+            return next()
+        },
+        JSON.stringify(req.body)
+    )
+
+});
 
 
-
+export default router
 
 
 
