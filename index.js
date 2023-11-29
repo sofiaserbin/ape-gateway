@@ -4,6 +4,7 @@ import expressJSDocSwagger from "express-jsdoc-swagger";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import MqttRequest from "mqtt-request"
+import timeslotRouter from "./controllers/v1/timeslots.js"
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -37,6 +38,7 @@ const options = {
 
 expressJSDocSwagger(app)(options);
 
+app.use("/v1/timeslots", timeslotRouter);
 
 app.get('/', (req, res) => {
     res.send('Hi from api-gateway')

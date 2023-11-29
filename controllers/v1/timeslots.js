@@ -1,11 +1,7 @@
-import pgp from "pg-promise";
 import express from "express";
-import mqttReq from "../..";
+import { mqttReq } from "../../index.js";
 
 const router = express.Router();
-const db = pgp({})({
-  connectionString: process.env.CONNECTION_STRING,
-});
 
 /**
  * @typedef TimeslotsQueryParams
@@ -21,19 +17,15 @@ const db = pgp({})({
  * @return {object} 404 - start time not found
  */
 
-router.get("/v1/timeslots", async (req, res) => {
+router.get("/", async (req, res, next) => {
+    mqttReq.request(
+        "v1/timeslots",
+        (payload) => {
+            req.mqttResponse = payload
+            return next()
+        },
+        JSON.stringify({startTime: req.query.startTime})
+    )
+})
 
-    const sTime = req.params.startTime || Date.now();
-
-    db.any('SELECT * FROM timeslot WHERE start_time = ${time} ORDER BY start_time ASC', 
-    {
-        time: sTime
-    })
-    .then(data => {
-        console.log(data);
-        res.status(200).json({data});
-    }).catch(error => {
-        console.log(error);
-        res.status(404).json({message: 'Start time not found.'})
-    });
-});
+export default router
