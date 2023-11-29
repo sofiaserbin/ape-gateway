@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import MqttRequest from "mqtt-request"
 import userRouter from "./controllers/v1/users.js"
+import timeslotRouter from "./controllers/v1/timeslots.js"
 import bodyparser from "body-parser"
 import morgan from "morgan"
 
@@ -44,6 +45,7 @@ expressJSDocSwagger(app)(options);
 // Router middlewares
 
 app.use("/v1/users", userRouter)
+app.use("/v1/timeslots", timeslotRouter);
 
 app.get('/', (req, res) => {
     return res.send('Hi from api-gateway')

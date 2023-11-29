@@ -1,4 +1,7 @@
-const router = require("express").Router();
+import express from "express";
+import { mqttReq } from "../../index.js";
+
+const router = express.Router();
 
 /**
  * @typedef TimeslotsQueryParams
@@ -13,6 +16,16 @@ const router = require("express").Router();
  * @return {object} 200 - Success response
  * @return {object} 404 - start time not found
  */
-router.get("/v1/timeslots",
-    //TODO: not implemented yet
-);
+
+router.get("/", async (req, res, next) => {
+    mqttReq.request(
+        "v1/timeslots",
+        (payload) => {
+            req.mqttResponse = payload
+            return next()
+        },
+        JSON.stringify({startTime: req.query.startTime})
+    )
+})
+
+export default router
