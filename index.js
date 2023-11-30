@@ -4,22 +4,24 @@ import expressJSDocSwagger from "express-jsdoc-swagger";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import MqttRequest from "mqtt-request"
-import pgp from "pg-promise"
-
+import morgan from "morgan"
+import clinicsRouter from "./controllers/v1/clinics.js"
+import bodyparser from "body-parser"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const apiDocsRoute = "/api-docs";
 
 const client = mqtt.connect(process.env.BROKER_URL)
-const mqttReq = new MqttRequest.default(client);
+export const mqttReq = new MqttRequest.default(client);
 
-export const db = pgp({}) ({
-    connectionString: process.env.CONNECTION_STRING,
-})
 
 const app = express()
 const port = process.env.PORT || 3000
+
+app.use(morgan("dev"))
+
+app.use(bodyparser.json())
 
 const options = {
     info: {
@@ -42,6 +44,7 @@ const options = {
 
 expressJSDocSwagger(app)(options);
 
+app.use("/v1/clinics", clinicsRouter)
 
 app.get('/', (req, res) => {
     res.send('Hi from api-gateway')
@@ -57,11 +60,27 @@ app.get("/demo", (req, res) => {
         JSON.stringify({ message: "Hi from API-Gateway..." }))
 })
 
+// Miiddleware to set http status code based on payload from mqtt response
+// make sure this middleware is declared after all the controller handlers
+app.use((req, res, next) => {
+    if (!req.mqttResponse) {
+        console.log("Skipping middlewate; no mqttResponse set on req")
+        return res.status(500).send()
+    }
+    const payload = JSON.parse(req.mqttResponse)
+    const httpStatus = payload.httpStatus || 200
+
+    // in http, we have the status code in the header anyway
+    // no reason to send it in the payload as well
+    delete payload.httpStatus
+
+    return res.status(httpStatus).json(payload)
+})
+
 client.on("connect", async () => {
     console.log("api-gateway connected to broker")
     console.log(`Broker URL: ${process.env.BROKER_URL}`)
 
-    await db.connect()
     
     app.listen(port, () => {
         console.log(`API-Gateway running on http://localhost:${port}`)
