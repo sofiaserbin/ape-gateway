@@ -5,8 +5,12 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import MqttRequest from "mqtt-request"
 import userRouter from "./controllers/v1/users.js"
+import dentistRouter from "./controllers/v1/dentists.js"
 import bodyparser from "body-parser"
 import morgan from "morgan"
+import timeout from "connect-timeout"
+
+MqttRequest.timeout = 5000;
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -44,6 +48,7 @@ expressJSDocSwagger(app)(options);
 // Router middlewares
 
 app.use("/v1/users", userRouter)
+app.use("/v1/dentists", dentistRouter)
 
 app.get('/', (req, res) => {
     return res.send('Hi from api-gateway')
@@ -59,6 +64,15 @@ app.get("/demo", (req, res) => {
         JSON.stringify({ message: "Hi from API-Gateway..." }))
 })
 
+
+app.use(function (err, req, res, next) {
+    console.error(err.stack);
+   
+    res.status(err.status || 500);
+    return res.send("Internal Server Error")
+});
+
+
 // Middleware to set http status code based on payload from mqtt response
 // make sure this is middleware is declared after all the controller handlers
 app.use((req, res, next) => {
@@ -69,6 +83,11 @@ app.use((req, res, next) => {
     const payload = JSON.parse(req.mqttResponse)
     const httpStatus = payload.httpStatus || 200
 
+    if(payload.hasOwnProperty("errorInternal")) {
+        console.log(payload.errorInternal)
+        delete payload.errorInternal
+    }
+
     // in http, we have the status code in the header anyway
     // no reason to send it in the payload as well
     delete payload.httpStatus
@@ -76,12 +95,16 @@ app.use((req, res, next) => {
     return res.status(httpStatus).json(payload)
 })
 
+
+
+
 // Start MQTT client and Express.js
 const client = mqtt.connect(process.env.BROKER_URL)
 export const mqttReq = new MqttRequest.default(client);
 client.on("connect", () => {
     console.log("api-gateway connected to broker")
     console.log(`Broker URL: ${process.env.BROKER_URL}`)
+    
 
 
     app.listen(port, () => {
