@@ -8,12 +8,15 @@ import userRouter from "./controllers/v1/users.js"
 import timeslotRouter from "./controllers/v1/timeslots.js"
 import bodyparser from "body-parser"
 import morgan from "morgan"
+import cors from "cors"
 
 const app = express()
 const port = process.env.PORT || 3000
 
 // Logging middleware
 app.use(morgan("dev"))
+app.options("*", cors());
+app.use(cors());
 
 // Body parser middleware to parse JSON body
 app.use(bodyparser.json())
