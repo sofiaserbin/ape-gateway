@@ -4,17 +4,16 @@ import expressJSDocSwagger from "express-jsdoc-swagger";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import MqttRequest from "mqtt-request"
+import userRouter from "./controllers/v1/users.js"
+import timeslotRouter from "./controllers/v1/timeslots.js"
+import bodyparser from "body-parser"
+import morgan from "morgan"
+import cors from "cors"
 import morgan from "morgan"
 import clinicsRouter from "./controllers/v1/clinics.js"
 import bodyparser from "body-parser"
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const apiDocsRoute = "/api-docs";
-
-const client = mqtt.connect(process.env.BROKER_URL)
-export const mqttReq = new MqttRequest.default(client);
-
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -23,6 +22,17 @@ app.use(morgan("dev"))
 
 app.use(bodyparser.json())
 
+// Logging middleware
+app.use(morgan("dev"))
+app.options("*", cors());
+app.use(cors());
+
+// Body parser middleware to parse JSON body
+app.use(bodyparser.json())
+
+// Swagger middleware
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const apiDocsRoute = "/api-docs";
 const options = {
     info: {
         version: "1.0.0",
@@ -44,10 +54,12 @@ const options = {
 
 expressJSDocSwagger(app)(options);
 
-app.use("/v1/clinics", clinicsRouter)
+app.use("/v1/clinics", clinicsRouter);
+app.use("/v1/users", userRouter);
+app.use("/v1/timeslots", timeslotRouter);
 
 app.get('/', (req, res) => {
-    res.send('Hi from api-gateway')
+    return res.send('Hi from api-gateway')
 })
 
 app.get("/demo", (req, res) => {
@@ -60,7 +72,26 @@ app.get("/demo", (req, res) => {
         JSON.stringify({ message: "Hi from API-Gateway..." }))
 })
 
-// Miiddleware to set http status code based on payload from mqtt response
+// Middleware to set http status code based on payload from mqtt response
+// make sure this is middleware is declared after all the controller handlers
+app.use((req, res, next) => {
+    if (!req.mqttResponse) {
+        console.log("Skipping middleware; no mqttResponse set on req")
+        return res.status(500).send()
+    }
+    const payload = JSON.parse(req.mqttResponse)
+    const httpStatus = payload.httpStatus || 200
+
+    // in http, we have the status code in the header anyway
+    // no reason to send it in the payload as well
+    delete payload.httpStatus
+
+    return res.status(httpStatus).json(payload)
+})
+
+// Start MQTT client and Express.js
+const client = mqtt.connect(process.env.BROKER_URL)
+export const mqttReq = new MqttRequest.default(client);// Miiddleware to set http status code based on payload from mqtt response
 // make sure this middleware is declared after all the controller handlers
 app.use((req, res, next) => {
     if (!req.mqttResponse) {

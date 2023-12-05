@@ -1,5 +1,6 @@
-const router = require("express").Router();
-
+import express from "express"
+import { mqttReq } from "../../index.js";
+const router = express.Router();
 /**
  * Get /v1/users/{userId}
  * @summary Returns user by id
@@ -7,9 +8,17 @@ const router = require("express").Router();
  * @return {object} 200 - Success response
  * @return {object} 404 - user id not found
  */
-router.get("/v1/users/:userId",
-    //TODO: not implemented yet
-);
+router.get("/:userId", async (req, res, next) => {
+  mqttReq.request(
+    "v1/users/:userId",
+    (payload) => {
+      req.mqttResponse = payload
+      return next()
+    },
+    JSON.stringify(req.params.userId)
+  )
+});
+
  /**
  * Get /v1/users/{userId}/notifications
  * @summary Returns all notifications of a user by id
@@ -17,10 +26,16 @@ router.get("/v1/users/:userId",
  * @return {object} 200 - Success response
  * @return {object} 404 - user id not found
  */
-router.get("/v1/users/:userId/notifications",
-//TODO: not implemented yet
-);
-
+router.get("/:userId/notifications", async (req, res, next) => {
+  mqttReq.request(
+    "v1/users/:userId/notifications",
+    (payload) => {
+      req.mqttResponse = payload
+      return next()
+    },
+    JSON.stringify(req.params.userId)
+  )
+});
 
 /**
  * Get /v1/users/{userId}/appointments
@@ -29,10 +44,16 @@ router.get("/v1/users/:userId/notifications",
  * @return {object} 200 - Success response
  * @return {object} 404 - user id not found
  */
-router.get("/v1/users/:userId/appointments",
-    //TODO: not implemented yet
-);
-
+router.get("/v1/users/:userId/appointments", async (req, res) => {
+mqttReq.request(
+    "v1/users/:userId/appointments",
+    (payload) => {
+      req.mqttResponse = payload
+      return next()
+    },
+    JSON.stringify(req.params.userId)
+  )
+});
 
 /**
  * Post /v1/users/login
@@ -41,9 +62,15 @@ router.get("/v1/users/:userId/appointments",
  * @return {object} 200 - Success response
  * @return {object} 400 - Bad request response
  */
-router.post("v1/users/login",
-    //TODO: not implemented yet
-);
+router.post("/login", async (req, res, next) => {
+    mqttReq.request("v1/users/login",
+        (payload) => {
+            req.mqttResponse = payload
+            return next()
+        },
+        JSON.stringify(req.body)
+    )
+});
 
 
 /**
@@ -53,16 +80,16 @@ router.post("v1/users/login",
  * @return {object} 201 - Success response
  * @return {object} 400 - Bad request response
  */
-router.post("/v1/users/register",
-    //TODO: not implemented yet
-);
+router.post("/register", async (req, res, next) => {
+    mqttReq.request("v1/users/register",
+        (payload) => {
+            req.mqttResponse = payload
+            return next()
+        },
+        JSON.stringify(req.body)
+    )
+
+});
 
 
-
-
-
-
-
-
-
-
+export default router
