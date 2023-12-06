@@ -9,9 +9,18 @@ import timeslotRouter from "./controllers/v1/timeslots.js"
 import bodyparser from "body-parser"
 import morgan from "morgan"
 import cors from "cors"
+import morgan from "morgan"
+import clinicsRouter from "./controllers/v1/clinics.js"
+import bodyparser from "body-parser"
+
+const __filename = fileURLToPath(import.meta.url);
 
 const app = express()
 const port = process.env.PORT || 3000
+
+app.use(morgan("dev"))
+
+app.use(bodyparser.json())
 
 // Logging middleware
 app.use(morgan("dev"))
@@ -45,9 +54,8 @@ const options = {
 
 expressJSDocSwagger(app)(options);
 
-// Router middlewares
-
-app.use("/v1/users", userRouter)
+app.use("/v1/clinics", clinicsRouter);
+app.use("/v1/users", userRouter);
 app.use("/v1/timeslots", timeslotRouter);
 
 app.get('/', (req, res) => {
@@ -83,12 +91,28 @@ app.use((req, res, next) => {
 
 // Start MQTT client and Express.js
 const client = mqtt.connect(process.env.BROKER_URL)
-export const mqttReq = new MqttRequest.default(client);
-client.on("connect", () => {
+export const mqttReq = new MqttRequest.default(client);// Miiddleware to set http status code based on payload from mqtt response
+// make sure this middleware is declared after all the controller handlers
+app.use((req, res, next) => {
+    if (!req.mqttResponse) {
+        console.log("Skipping middlewate; no mqttResponse set on req")
+        return res.status(500).send()
+    }
+    const payload = JSON.parse(req.mqttResponse)
+    const httpStatus = payload.httpStatus || 200
+
+    // in http, we have the status code in the header anyway
+    // no reason to send it in the payload as well
+    delete payload.httpStatus
+
+    return res.status(httpStatus).json(payload)
+})
+
+client.on("connect", async () => {
     console.log("api-gateway connected to broker")
     console.log(`Broker URL: ${process.env.BROKER_URL}`)
 
-
+    
     app.listen(port, () => {
         console.log(`API-Gateway running on http://localhost:${port}`)
         console.log(`API Docs running on http://localhost:${port}${apiDocsRoute}`)
