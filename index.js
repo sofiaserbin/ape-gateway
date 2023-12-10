@@ -9,16 +9,13 @@ import timeslotRouter from "./controllers/v1/timeslots.js"
 import bodyparser from "body-parser"
 import morgan from "morgan"
 import cors from "cors"
-import morgan from "morgan"
 import clinicsRouter from "./controllers/v1/clinics.js"
-import bodyparser from "body-parser"
+import appointmentsRouter from "./controllers/v1/appointments.js"
 
 const __filename = fileURLToPath(import.meta.url);
 
 const app = express()
 const port = process.env.PORT || 3000
-
-app.use(morgan("dev"))
 
 app.use(bodyparser.json())
 
@@ -57,6 +54,7 @@ expressJSDocSwagger(app)(options);
 app.use("/v1/clinics", clinicsRouter);
 app.use("/v1/users", userRouter);
 app.use("/v1/timeslots", timeslotRouter);
+app.use("/v1/appointments", appointmentsRouter);
 
 app.get('/', (req, res) => {
     return res.send('Hi from api-gateway')
