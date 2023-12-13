@@ -1,4 +1,6 @@
-const router = require("express").Router();
+import express from "express";
+const router = express.Router();
+import { mqttReq } from "../../index.js";
 
 /**
  * Post /v1/appointments
@@ -7,9 +9,16 @@ const router = require("express").Router();
  * @return {object} 200 - Success response
  * @return {object} 400 - Bad request response
  */
-router.post("/v1/appointments",
-    //TODO: not implemented yet
-);
+router.post("/", async (req, res, next) => {
+    mqttReq.request(
+      "v1/appointments/create",
+      (payload) => {
+        req.mqttResponse = payload
+        return next()
+      },
+      JSON.stringify(req.body)
+    )
+  })
 
 
 /**
@@ -19,10 +28,16 @@ router.post("/v1/appointments",
  * @return {object} 200 - Success response
  * @return {object} 404 - appointment id not found
  */
-router.get("/v1/appointments/:appointmentId",
-    //TODO: not implemented yet
-);
-
+router.get("/:appointmentId", async (req, res, next) => {
+    mqttReq.request("v1/appointments/read",
+    (payload) => {
+      req.mqttResponse = payload
+      return next()
+    },
+    JSON.stringify({appointmentId: req.params.appointmentId})
+    )
+    
+  });
 
 /**
  * Patch /v1/appointments/{appointmentId}
@@ -31,6 +46,19 @@ router.get("/v1/appointments/:appointmentId",
  * @return {object} 200 - Success response
  * @return {object} 404 - appointment id not found
  */
-router.patch("/v1/appointments/:appointmentId",
-    //TODO: not implemented yet
-);
+router.patch("/:appointmentId", async (req, res, next) => {
+    const payload = {
+        appointmentId: req.params.appointmentId,
+        requestBody: req.body
+    };
+    mqttReq.request(
+        "v1/appointments/update",
+        (responsePayload) => {
+            req.mqttResponse = responsePayload;
+            return next();
+        },
+        JSON.stringify(payload)
+    );
+});
+
+export default router;
