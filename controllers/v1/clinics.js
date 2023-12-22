@@ -1,4 +1,6 @@
-const router = require("express").Router();
+import express from "express";
+const router = express.Router({mergeParams:true})
+import { mqttReq } from "../../index.js"
 
 /**
  * Get /v1/clinics
@@ -6,6 +8,16 @@ const router = require("express").Router();
  * @tags clinics
  * @return {object} 200 - Success response
  */
-router.get("/v1/clinics",
-    //TODO: not implemented yet
-);
+router.get("/", async (req, res, next) => {
+  console.log("bob")
+  mqttReq.request("v1/clinics/read",
+  (payload) => {
+    req.mqttResponse = payload
+    return next()
+  },
+  JSON.stringify('')
+  )
+  
+});
+
+export default router

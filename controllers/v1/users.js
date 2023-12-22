@@ -2,7 +2,6 @@ import express from "express"
 import { mqttReq } from "../../index.js";
 
 const router = express.Router();
-
 /**
  * Get /v1/users/{userId}
  * @summary Returns user by id
@@ -46,6 +45,7 @@ router.get("/:userId/notifications", async (req, res, next) => {
  * @return {object} 200 - Success response
  * @return {object} 404 - user id not found
  */
+router.get("/v1/users/:userId/appointments", async (req, res) => {
 router.get("/v1/users/:userId/appointments", async (req, res) => {
 mqttReq.request(
     "v1/users/:userId/appointments",
