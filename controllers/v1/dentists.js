@@ -55,19 +55,26 @@ router.delete("/:dentistId/timeslots/:timeslotId", (req, res, next) =>{
     });
 
 /**
- * Post /v1/dentists/{dentistId}/timeslots
+ * Post /v1/dentists/timeslots
  * @summary Creates a new timeslot of a dentist by id 
  * @tags dentists
  * @return {object} 200 - Success response
  * @return {object} 404 - dentist id not found
  */
-router.post("/:dentistId/timeslots", (req, res, next) =>{
+router.post("/timeslots", (req, res, next) =>{
+    let dentist_token = '';
+    console.log(req.get("Authorization"))
+    if (req.get("Authorization")) {
+        const authHeader = req.get("Authorization");
+        console.log(authHeader)
+        dentist_token = authHeader.split(' ')[1];
+    }
     mqttReq.request("v1/timeslots/create",
         (payload) => {
         req.mqttResponse = payload
         return next()
         },
-    JSON.stringify({start_time : req.body.start_time, end_time: req.body.end_time, dentistId: req.params.dentistId})
+    JSON.stringify({start_time : req.body.start_time, end_time: req.body.end_time, token: dentist_token})
     );
     });
 
