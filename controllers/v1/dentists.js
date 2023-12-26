@@ -37,20 +37,27 @@ router.get("/", (req, res, next) => {
 
 
 /**
- * Delete /v1/dentists/{dentistId}/timeslots/{timeslotId}
+ * Delete /v1/dentists/timeslots/{timeslotId}
  * @summary Deletes a timeslot by id of a dentist by id
  * @tags dentists
  * @return {object} 200 - Success response
  * @return {object} 404 - dentist id not found
  * @return {object} 404 - timeslot id not found
  */
-router.delete("/:dentistId/timeslots/:timeslotId", (req, res, next) =>{
+router.delete("/timeslots/:timeslotId", (req, res, next) =>{
+    let dentist_token = '';
+    console.log(req.get("Authorization"))
+    if (req.get("Authorization")) {
+        const authHeader = req.get("Authorization");
+        console.log(authHeader)
+        dentist_token = authHeader.split(' ')[1];
+    }
     mqttReq.request("v1/timeslots/delete",
         (payload) => {
         req.mqttResponse = payload
         return next()
         },
-    JSON.stringify({dentistId: req.params.dentistId, timeslotId: req.params.timeslotId})
+    JSON.stringify({dentistId: req.params.dentistId, timeslotId: req.params.timeslotId, token: dentist_token})
     )
     });
 
