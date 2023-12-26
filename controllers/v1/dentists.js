@@ -85,33 +85,7 @@ router.post("/timeslots", (req, res, next) =>{
     );
     });
 
-/**
- * Post /v1/dentists/{dentistId}/ratings
- * @summary Creates a new rating for dentist
- * @tags dentists
- * @return {object} 200 - Success response
- * @return {object} 400 - Bad request response
- */
-router.post("/:dentistId/ratings", (req, res, next) => {
-    let user_token = '';
-    console.log(req.get("Authorization"))
-    if (req.get("Authorization")) {
-        const authHeader = req.get("Authorization");
-        console.log(authHeader)
-        user_token = authHeader.split(' ')[1];
-        console.log(user_token)
-    }
 
-    mqttReq.request(
-        "v1/dentists/ratings/create",
-        (payload) => {
-            req.mqttResponse = payload;
-            // Handle your MQTT response here
-            return next();
-        },
-        JSON.stringify({ token: user_token, dentistId: req.params.dentistId, rating: req.body.rating})
-    );
-    });
 
 
 
