@@ -46,12 +46,21 @@ router.get("/:appointmentId", async (req, res, next) => {
  * @return {object} 200 - Success response
  */
 router.get("/", async (req, res, next) => {
+  let dentist_token = '';
+    console.log(req.get("Authorization"))
+    if (req.get("Authorization")) {
+        const authHeader = req.get("Authorization");
+        console.log(authHeader)
+        dentist_token = authHeader.split(' ')[1];
+        console.log(dentist_token)
+    }
+
   mqttReq.request("v1/appointments/all",
   (payload) => {
     req.mqttResponse = payload
     return next()
   },
-  JSON.stringify('')
+  JSON.stringify({token: dentist_token})
   )
   
 });
