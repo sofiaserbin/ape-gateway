@@ -9,7 +9,6 @@ import { mqttReq } from "../../index.js"
  * @return {object} 200 - Success response
  */
 router.get("/", async (req, res, next) => {
-  console.log("bob")
   mqttReq.request("v1/clinics/read",
   (payload) => {
     req.mqttResponse = payload

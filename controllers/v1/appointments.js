@@ -39,6 +39,23 @@ router.get("/:appointmentId", async (req, res, next) => {
     
   });
 
+  /**
+ * Get /v1/appointments
+ * @summary Returns all appointments
+ * @tags appointments
+ * @return {object} 200 - Success response
+ */
+router.get("/", async (req, res, next) => {
+  mqttReq.request("v1/appointments/all",
+  (payload) => {
+    req.mqttResponse = payload
+    return next()
+  },
+  JSON.stringify('')
+  )
+  
+});
+
 /**
  * Patch /v1/appointments/{appointmentId}
  * @summary Updates an appointment by appointment id
