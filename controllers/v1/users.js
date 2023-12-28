@@ -92,13 +92,13 @@ router.post("/register", async (req, res, next) => {
 });
 
 /**
- * Post /v1/dentists/{dentistId}/ratings
+ * Patch /v1/dentists/{dentistId}/ratings
  * @summary Creates a new rating for dentist
  * @tags dentists
  * @return {object} 200 - Success response
  * @return {object} 400 - Bad request response
  */
-router.post("/dentists/:dentistId", (req, res, next) => {
+router.patch("/dentists/:dentistId", (req, res, next) => {
   let user_token = '';
   console.log(req.get("Authorization"))
   if (req.get("Authorization")) {
