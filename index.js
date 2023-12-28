@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import MqttRequest from "mqtt-request"
 import userRouter from "./controllers/v1/users.js"
+import logsRouter from "./controllers/v1/logs.js"
 import dentistRouter from "./controllers/v1/dentists.js"
 import timeslotRouter from "./controllers/v1/timeslots.js"
 import bodyparser from "body-parser"
@@ -60,6 +61,7 @@ app.use("/v1/users", userRouter);
 app.use("/v1/timeslots", timeslotRouter);
 app.use("/v1/appointments", appointmentsRouter);
 app.use("/v1/dentists", dentistRouter)
+app.use("/v1/logs", logsRouter)
 
 app.get('/', (req, res) => {
     return res.send('Hi from api-gateway')
@@ -78,7 +80,7 @@ app.get("/demo", (req, res) => {
 
 app.use(function (err, req, res, next) {
     console.error(err.stack);
-   
+
     res.status(err.status || 500);
     return res.send("Internal Server Error")
 });
@@ -94,7 +96,7 @@ app.use((req, res, next) => {
     const payload = JSON.parse(req.mqttResponse)
     const httpStatus = payload.httpStatus || 200
 
-    if(payload.hasOwnProperty("errorInternal")) {
+    if (payload.hasOwnProperty("errorInternal")) {
         console.log(payload.errorInternal)
         delete payload.errorInternal
     }
@@ -131,9 +133,9 @@ app.use((req, res, next) => {
 client.on("connect", async () => {
     console.log("api-gateway connected to broker")
     console.log(`Broker URL: ${process.env.BROKER_URL}`)
-    
 
-    
+
+
     app.listen(port, () => {
         console.log(`API-Gateway running on http://localhost:${port}`)
         console.log(`API Docs running on http://localhost:${port}${apiDocsRoute}`)
