@@ -20,6 +20,33 @@ router.get("/:userId", async (req, res, next) => {
   )
 });
 
+/**
+ * Patch /v1/users/{userId}
+ * @summary Updates user by id
+ * @tags users
+ * @return {object} 200 - Success response
+ * @return {object} 404 - user id not found
+ */
+router.patch("/:userId", async (req, res, next) => {
+  const payload = {
+    userId: req.params.userId,
+    requestBody: req.body
+  };
+
+  console.log('API Gateway Request Payload:', payload);
+
+  mqttReq.request(
+    "v1/users/update",
+    (responsePayload) => {
+      console.log('API Gateway Response Payload:', responsePayload);
+      req.mqttResponse = responsePayload;
+      return next();
+    },
+    JSON.stringify(payload)
+  );
+});
+
+
  /**
  * Get /v1/users/{userId}/notifications
  * @summary Returns all notifications of a user by id
@@ -45,7 +72,6 @@ router.get("/:userId/notifications", async (req, res, next) => {
  * @return {object} 200 - Success response
  * @return {object} 404 - user id not found
  */
-router.get("/v1/users/:userId/appointments", async (req, res) => {
 router.get("/v1/users/:userId/appointments", async (req, res) => {
 mqttReq.request(
     "v1/users/:userId/appointments",

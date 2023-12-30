@@ -21,8 +21,6 @@ const __filename = fileURLToPath(import.meta.url);
 const app = express()
 const port = process.env.PORT || 3000
 
-app.use(bodyparser.json())
-
 // Logging middleware
 app.use(morgan("dev"))
 app.options("*", cors());
