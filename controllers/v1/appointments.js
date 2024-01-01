@@ -10,6 +10,7 @@ import { mqttReq } from "../../index.js";
  * @return {object} 400 - Bad request response
  */
 router.post("/", async (req, res, next) => {
+  
     mqttReq.request(
       "v1/appointments/create",
       (payload) => {
@@ -29,12 +30,20 @@ router.post("/", async (req, res, next) => {
  * @return {object} 404 - appointment id not found
  */
 router.get("/:appointmentId", async (req, res, next) => {
+  let user_token = '';
+    console.log(req.get("Authorization"))
+    if (req.get("Authorization")) {
+        const authHeader = req.get("Authorization");
+        console.log(authHeader)
+        user_token = authHeader.split(' ')[1];
+    }
+
     mqttReq.request("v1/appointments/read",
     (payload) => {
       req.mqttResponse = payload
       return next()
     },
-    JSON.stringify({appointmentId: req.params.appointmentId})
+    JSON.stringify({appointmentId: req.params.appointmentId, token: user_token})
     )
     
   });
@@ -73,17 +82,20 @@ router.get("/", async (req, res, next) => {
  * @return {object} 404 - appointment id not found
  */
 router.patch("/:appointmentId", async (req, res, next) => {
-    const payload = {
-        appointmentId: req.params.appointmentId,
-        requestBody: req.body
-    };
+  let user_token = '';
+    console.log(req.get("Authorization"))
+    if (req.get("Authorization")) {
+        const authHeader = req.get("Authorization");
+        console.log(authHeader)
+        user_token = authHeader.split(' ')[1];
+    }
     mqttReq.request(
         "v1/appointments/update",
         (responsePayload) => {
             req.mqttResponse = responsePayload;
             return next();
         },
-        JSON.stringify(payload)
+        JSON.stringify({appointmentId: req.params.appointmentId, requestBody: req.body, token: user_token})
     );
 });
 
