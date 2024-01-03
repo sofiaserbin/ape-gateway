@@ -19,12 +19,12 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
     mqttReq.request(
-        "v1/timeslots",
+        "v1/timeslots/read",
         (payload) => {
             req.mqttResponse = payload
             return next()
         },
-        JSON.stringify({startTime: req.query.startTime})
+        JSON.stringify({ startTime: req.query.startTime, token: req.token })
     )
 })
 
