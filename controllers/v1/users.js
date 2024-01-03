@@ -110,7 +110,7 @@ router.patch("/dentists/:dentistId", (req, res, next) => {
             req.mqttResponse = payload;
             return next();
         },
-        JSON.stringify({ token: user_token, dentistId: req.params.dentistId, rating: req.body.rating, favorite_dentist: req.body.favorite_dentist, token: req.token })
+        JSON.stringify({dentistId: req.params.dentistId, rating: req.body.rating, favorite_dentist: req.body.favorite_dentist, token: req.token })
     );
 });
 

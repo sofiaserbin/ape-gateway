@@ -17,7 +17,7 @@ router.post("/", async (req, res, next) => {
             req.mqttResponse = payload
             return next()
         },
-        JSON.stringify(req.body)
+        JSON.stringify({ body: req.body, token: req.token} )
     )
 })
 
