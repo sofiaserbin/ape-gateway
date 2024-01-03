@@ -42,6 +42,7 @@ app.use(mqttResponseIntegrationHandler)
 
 const client = mqtt.connect(process.env.BROKER_URL)
 MqttRequest.timeout = 5000;
+MqttRequest.publishOptions = { qos: 2 };
 export const mqttReq = new MqttRequest.default(client);
 
 client.on("connect", async () => {
