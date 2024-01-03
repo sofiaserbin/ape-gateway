@@ -85,8 +85,29 @@ router.post("/timeslots", (req, res, next) =>{
     );
     });
 
-
-
+/**
+ * Get /v1/dentists/timeslots
+ * @summary Get all timeslots for a dentist
+ * @tags dentists
+ * @return {object} 200 - Success response
+ * @return {object} 404 - Dentist id not found
+ */
+router.get("/timeslots", (req, res, next) => {
+    let dentist_token = '';
+    console.log(req.get("Authorization"))
+    if (req.get("Authorization")) {
+        const authHeader = req.get("Authorization");
+        console.log(authHeader)
+        dentist_token = authHeader.split(' ')[1];
+    }
+    mqttReq.request("v1/timeslots/read",
+        (payload) => {
+        req.mqttResponse = payload
+        return next()
+        },
+    JSON.stringify({dentistId: req.params.dentistId, token: dentist_token})
+    )
+    });
 
 
 export default router
