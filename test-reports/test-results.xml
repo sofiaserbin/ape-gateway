@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="13.163" tests="27" failures="23">
+  <testsuite name="Root Suite" timestamp="2024-01-02T15:56:33" tests="0" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Post new appointment" timestamp="2024-01-02T15:56:33" tests="1" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/appointments.test.js" time="0.372" failures="1">
+    <testcase name="Post new appointment Should return status 201 when creating a new apppointment" time="0.361" classname="Should return status 201 when creating a new apppointment">
+      <failure message="expected { Object (_events, _eventsCount, ...) } to have status code 201 but got 401" type="AssertionError"><![CDATA[AssertionError: expected { Object (_events, _eventsCount, ...) } to have status code 201 but got 401
+    at file:///mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/appointments.test.js:23:37
+    at Request.callback (node_modules/superagent/lib/node/index.js:857:12)
+    at /mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/node_modules/superagent/lib/node/index.js:1070:18
+    at IncomingMessage.<anonymous> (node_modules/superagent/lib/node/parsers/json.js:21:7)
+    at IncomingMessage.emit (node:events:529:35)
+    at endReadableNT (node:internal/streams/readable:1368:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+
+      + expected - actual
+
+      -401
+      +201
+      ]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Get Appointment by ID API" timestamp="2024-01-02T15:56:33" tests="2" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/appointments.test.js" time="0.030" failures="2">
+    <testcase name="Get Appointment by ID API Should return a specific appointment when it exists" time="0.014" classname="Should return a specific appointment when it exists">
+      <failure message="expected { Object (_events, _eventsCount, ...) } to have status code 200 but got 401" type="AssertionError"><![CDATA[AssertionError: expected { Object (_events, _eventsCount, ...) } to have status code 200 but got 401
+    at file:///mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/appointments.test.js:41:37
+    at Request.callback (node_modules/superagent/lib/node/index.js:857:12)
+    at /mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/node_modules/superagent/lib/node/index.js:1070:18
+    at IncomingMessage.<anonymous> (node_modules/superagent/lib/node/parsers/json.js:21:7)
+    at IncomingMessage.emit (node:events:529:35)
+    at endReadableNT (node:internal/streams/readable:1368:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+
+      + expected - actual
+
+      -401
+      +200
+      ]]></failure>
+    </testcase>
+    <testcase name="Get Appointment by ID API Should return 404 when the appointment does not exist" time="0.011" classname="Should return 404 when the appointment does not exist">
+      <failure message="expected { Object (_events, _eventsCount, ...) } to have status code 404 but got 401" type="AssertionError"><![CDATA[AssertionError: expected { Object (_events, _eventsCount, ...) } to have status code 404 but got 401
+    at file:///mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/appointments.test.js:53:37
+    at Request.callback (node_modules/superagent/lib/node/index.js:857:12)
+    at /mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/node_modules/superagent/lib/node/index.js:1070:18
+    at IncomingMessage.<anonymous> (node_modules/superagent/lib/node/parsers/json.js:21:7)
+    at IncomingMessage.emit (node:events:529:35)
+    at endReadableNT (node:internal/streams/readable:1368:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+
+      + expected - actual
+
+      -401
+      +404
+      ]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Get all appointments API" timestamp="2024-01-02T15:56:33" tests="1" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/appointments.test.js" time="2.004" failures="1">
+    <testcase name="Get all appointments API Should have status 200 and return all appointments for a currently logged in user" time="2.002" classname="Should have status 200 and return all appointments for a currently logged in user">
+      <failure message="Timeout of 2000ms exceeded. For async tests and hooks, ensure &quot;done()&quot; is called; if returning a Promise, ensure it resolves. (/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/appointments.test.js)" type="Error"><![CDATA[Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves. (/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/appointments.test.js)
+    at listOnTimeout (node:internal/timers:569:17)
+    at process.processTimers (node:internal/timers:512:7)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Update Appointment by ID API" timestamp="2024-01-02T15:56:35" tests="2" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/appointments.test.js" time="0.047" failures="2">
+    <testcase name="Update Appointment by ID API Should update an existing appointment" time="0.021" classname="Should update an existing appointment">
+      <failure message="expected { Object (_events, _eventsCount, ...) } to have status code 200 but got 401" type="AssertionError"><![CDATA[AssertionError: expected { Object (_events, _eventsCount, ...) } to have status code 200 but got 401
+    at file:///mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/appointments.test.js:84:37
+    at Request.callback (node_modules/superagent/lib/node/index.js:857:12)
+    at /mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/node_modules/superagent/lib/node/index.js:1070:18
+    at IncomingMessage.<anonymous> (node_modules/superagent/lib/node/parsers/json.js:21:7)
+    at IncomingMessage.emit (node:events:529:35)
+    at endReadableNT (node:internal/streams/readable:1368:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+
+      + expected - actual
+
+      -401
+      +200
+      ]]></failure>
+    </testcase>
+    <testcase name="Update Appointment by ID API Should return 404 when trying to update a non-existing appointment" time="0.022" classname="Should return 404 when trying to update a non-existing appointment">
+      <failure message="expected { Object (_events, _eventsCount, ...) } to have status code 404 but got 401" type="AssertionError"><![CDATA[AssertionError: expected { Object (_events, _eventsCount, ...) } to have status code 404 but got 401
+    at file:///mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/appointments.test.js:101:37
+    at Request.callback (node_modules/superagent/lib/node/index.js:857:12)
+    at /mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/node_modules/superagent/lib/node/index.js:1070:18
+    at IncomingMessage.<anonymous> (node_modules/superagent/lib/node/parsers/json.js:21:7)
+    at IncomingMessage.emit (node:events:529:35)
+    at endReadableNT (node:internal/streams/readable:1368:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+
+      + expected - actual
+
+      -401
+      +404
+      ]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Get all clinics" timestamp="2024-01-02T15:56:35" tests="1" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/clinics.test.js" time="0.064" failures="0">
+    <testcase name="Get all clinics Should return a list of all clinics" time="0.062" classname="Should return a list of all clinics">
+    </testcase>
+  </testsuite>
+  <testsuite name="Post new clinic" timestamp="2024-01-02T15:56:35" tests="1" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/clinics.test.js" time="0.058" failures="1">
+    <testcase name="Post new clinic Should return status 201 when creating a new clinic" time="0.056" classname="Should return status 201 when creating a new clinic">
+      <failure message="expected { clinic: { id: 8, …(3) }, …(1) } to have property &apos;name&apos;" type="AssertionError"><![CDATA[AssertionError: expected { clinic: { id: 8, …(3) }, …(1) } to have property 'name'
+    at file:///mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/clinics.test.js:34:42
+    at Request.callback (node_modules/superagent/lib/node/index.js:857:12)
+    at /mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/node_modules/superagent/lib/node/index.js:1070:18
+    at IncomingMessage.<anonymous> (node_modules/superagent/lib/node/parsers/json.js:21:7)
+    at IncomingMessage.emit (node:events:529:35)
+    at endReadableNT (node:internal/streams/readable:1368:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Update Clinic by ID API" timestamp="2024-01-02T15:56:35" tests="2" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/clinics.test.js" time="0.076" failures="0">
+    <testcase name="Update Clinic by ID API Should update an existing clinic" time="0.057" classname="Should update an existing clinic">
+    </testcase>
+    <testcase name="Update Clinic by ID API Should return 404 when trying to update a non-existing clinic" time="0.016" classname="Should return 404 when trying to update a non-existing clinic">
+    </testcase>
+  </testsuite>
+  <testsuite name="Delete a clinic by id" timestamp="2024-01-02T15:56:35" tests="2" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/clinics.test.js" time="2.009" failures="2">
+    <testcase name="Delete a clinic by id Should return status 200 when a timeslot deleted" time="0.006" classname="Should return status 200 when a timeslot deleted">
+      <failure message="Cannot use &apos;in&apos; operator to search for &apos;status&apos; in undefined" type="TypeError"><![CDATA[TypeError: Cannot use 'in' operator to search for 'status' in undefined
+    at Proxy.<anonymous> (node_modules/chai-http/lib/http.js:81:38)
+    at Proxy.methodWrapper (node_modules/chai/lib/chai/utils/addMethod.js:57:25)
+    at file:///mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/clinics.test.js:83:37
+    at Request.callback (node_modules/superagent/lib/node/index.js:867:3)
+    at ClientRequest.<anonymous> (node_modules/superagent/lib/node/index.js:789:10)
+    at ClientRequest.emit (node:events:517:28)
+    at Socket.socketErrorListener (node:_http_client:501:9)
+    at Socket.emit (node:events:517:28)
+    at emitErrorNT (node:internal/streams/destroy:151:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)]]></failure>
+    </testcase>
+    <testcase name="Delete a clinic by id Should return 404 when the clinic does not exist" time="2.000" classname="Should return 404 when the clinic does not exist">
+      <failure message="Timeout of 2000ms exceeded. For async tests and hooks, ensure &quot;done()&quot; is called; if returning a Promise, ensure it resolves. (/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/clinics.test.js)" type="Error"><![CDATA[Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves. (/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/clinics.test.js)
+    at listOnTimeout (node:internal/timers:569:17)
+    at process.processTimers (node:internal/timers:512:7)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Get all dentists" timestamp="2024-01-02T15:56:37" tests="1" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/dentists.test.js" time="0.021" failures="0">
+    <testcase name="Get all dentists Should return a list of all dentists" time="0.020" classname="Should return a list of all dentists">
+    </testcase>
+  </testsuite>
+  <testsuite name="Post new rating for a dentist" timestamp="2024-01-02T15:56:37" tests="1" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/dentists.test.js" time="0.011" failures="1">
+    <testcase name="Post new rating for a dentist Should return status 201 when new rating posted" time="0.010" classname="Should return status 201 when new rating posted">
+      <failure message="expected { Object (_events, _eventsCount, ...) } to have status code 201 but got 500" type="AssertionError"><![CDATA[AssertionError: expected { Object (_events, _eventsCount, ...) } to have status code 201 but got 500
+    at file:///mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/dentists.test.js:29:37
+    at Request.callback (node_modules/superagent/lib/node/index.js:857:12)
+    at IncomingMessage.<anonymous> (node_modules/superagent/lib/node/index.js:1070:18)
+    at IncomingMessage.emit (node:events:529:35)
+    at endReadableNT (node:internal/streams/readable:1368:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+
+      + expected - actual
+
+      -500
+      +201
+      ]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Post new timeslot for a dentist by id" timestamp="2024-01-02T15:56:37" tests="1" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/dentists.test.js" time="0.005" failures="1">
+    <testcase name="Post new timeslot for a dentist by id Should return status 201 when new timeslot posted" time="0.003" classname="Should return status 201 when new timeslot posted">
+      <failure message="Cannot use &apos;in&apos; operator to search for &apos;status&apos; in undefined" type="TypeError"><![CDATA[TypeError: Cannot use 'in' operator to search for 'status' in undefined
+    at Proxy.<anonymous> (node_modules/chai-http/lib/http.js:81:38)
+    at Proxy.methodWrapper (node_modules/chai/lib/chai/utils/addMethod.js:57:25)
+    at file:///mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/dentists.test.js:47:37
+    at Request.callback (node_modules/superagent/lib/node/index.js:867:3)
+    at ClientRequest.<anonymous> (node_modules/superagent/lib/node/index.js:789:10)
+    at ClientRequest.emit (node:events:517:28)
+    at Socket.socketErrorListener (node:_http_client:501:9)
+    at Socket.emit (node:events:517:28)
+    at emitErrorNT (node:internal/streams/destroy:151:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Delete a timeslot by id for a dentist by id" timestamp="2024-01-02T15:56:37" tests="3" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/dentists.test.js" time="0.033" failures="3">
+    <testcase name="Delete a timeslot by id for a dentist by id Should return status 200 when a timeslot deleted" time="0.004" classname="Should return status 200 when a timeslot deleted">
+      <failure message="Cannot use &apos;in&apos; operator to search for &apos;status&apos; in undefined" type="TypeError"><![CDATA[TypeError: Cannot use 'in' operator to search for 'status' in undefined
+    at Proxy.<anonymous> (node_modules/chai-http/lib/http.js:81:38)
+    at Proxy.methodWrapper (node_modules/chai/lib/chai/utils/addMethod.js:57:25)
+    at file:///mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/dentists.test.js:61:37
+    at Request.callback (node_modules/superagent/lib/node/index.js:867:3)
+    at ClientRequest.<anonymous> (node_modules/superagent/lib/node/index.js:789:10)
+    at ClientRequest.emit (node:events:517:28)
+    at Socket.socketErrorListener (node:_http_client:501:9)
+    at Socket.emit (node:events:517:28)
+    at emitErrorNT (node:internal/streams/destroy:151:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)]]></failure>
+    </testcase>
+    <testcase name="Delete a timeslot by id for a dentist by id Should return 404 when the dentist does not exist" time="0.007" classname="Should return 404 when the dentist does not exist">
+      <failure message="expected { Object (_events, _eventsCount, ...) } to have status code 404 but got 500" type="AssertionError"><![CDATA[AssertionError: expected { Object (_events, _eventsCount, ...) } to have status code 404 but got 500
+    at file:///mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/dentists.test.js:72:37
+    at Request.callback (node_modules/superagent/lib/node/index.js:857:12)
+    at IncomingMessage.<anonymous> (node_modules/superagent/lib/node/index.js:1070:18)
+    at IncomingMessage.emit (node:events:529:35)
+    at endReadableNT (node:internal/streams/readable:1368:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+
+      + expected - actual
+
+      -500
+      +404
+      ]]></failure>
+    </testcase>
+    <testcase name="Delete a timeslot by id for a dentist by id Should return 404 when the timeslot does not exist" time="0.016" classname="Should return 404 when the timeslot does not exist">
+      <failure message="expected { Object (_events, _eventsCount, ...) } to have status code 404 but got 401" type="AssertionError"><![CDATA[AssertionError: expected { Object (_events, _eventsCount, ...) } to have status code 404 but got 401
+    at file:///mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/dentists.test.js:83:37
+    at Request.callback (node_modules/superagent/lib/node/index.js:857:12)
+    at /mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/node_modules/superagent/lib/node/index.js:1070:18
+    at IncomingMessage.<anonymous> (node_modules/superagent/lib/node/parsers/json.js:21:7)
+    at IncomingMessage.emit (node:events:529:35)
+    at endReadableNT (node:internal/streams/readable:1368:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+
+      + expected - actual
+
+      -401
+      +404
+      ]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Get all timeslots" timestamp="2024-01-02T15:56:37" tests="1" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/timeslots.test.js" time="0.064" failures="1">
+    <testcase name="Get all timeslots Should return a list of all timeslots" time="0.062" classname="Should return a list of all timeslots">
+      <failure message="expected { Object (_events, _eventsCount, ...) } to have status code 200 but got 400" type="AssertionError"><![CDATA[AssertionError: expected { Object (_events, _eventsCount, ...) } to have status code 200 but got 400
+    at file:///mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/timeslots.test.js:15:37
+    at Request.callback (node_modules/superagent/lib/node/index.js:857:12)
+    at /mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/node_modules/superagent/lib/node/index.js:1070:18
+    at IncomingMessage.<anonymous> (node_modules/superagent/lib/node/parsers/json.js:21:7)
+    at IncomingMessage.emit (node:events:529:35)
+    at endReadableNT (node:internal/streams/readable:1368:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+
+      + expected - actual
+
+      -400
+      +200
+      ]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Register new user" timestamp="2024-01-02T15:56:37" tests="1" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/users.test.js" time="0.159" failures="1">
+    <testcase name="Register new user Should return status 201 when creating a new user" time="0.156" classname="Should return status 201 when creating a new user">
+      <failure message="expected { Object (_events, _eventsCount, ...) } to have status code 201 but got 400" type="AssertionError"><![CDATA[AssertionError: expected { Object (_events, _eventsCount, ...) } to have status code 201 but got 400
+    at file:///mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/users.test.js:22:37
+    at Request.callback (node_modules/superagent/lib/node/index.js:857:12)
+    at /mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/node_modules/superagent/lib/node/index.js:1070:18
+    at IncomingMessage.<anonymous> (node_modules/superagent/lib/node/parsers/json.js:21:7)
+    at IncomingMessage.emit (node:events:529:35)
+    at endReadableNT (node:internal/streams/readable:1368:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+
+      + expected - actual
+
+      -400
+      +201
+      ]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Get user by ID" timestamp="2024-01-02T15:56:38" tests="2" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/users.test.js" time="4.004" failures="2">
+    <testcase name="Get user by ID Should return a specific user when it exists" time="2.001" classname="Should return a specific user when it exists">
+      <failure message="Timeout of 2000ms exceeded. For async tests and hooks, ensure &quot;done()&quot; is called; if returning a Promise, ensure it resolves. (/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/users.test.js)" type="Error"><![CDATA[Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves. (/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/users.test.js)
+    at listOnTimeout (node:internal/timers:569:17)
+    at process.processTimers (node:internal/timers:512:7)]]></failure>
+    </testcase>
+    <testcase name="Get user by ID Should return 404 when the user does not exist" time="2.002" classname="Should return 404 when the user does not exist">
+      <failure message="Timeout of 2000ms exceeded. For async tests and hooks, ensure &quot;done()&quot; is called; if returning a Promise, ensure it resolves. (/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/users.test.js)" type="Error"><![CDATA[Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves. (/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/users.test.js)
+    at listOnTimeout (node:internal/timers:569:17)
+    at process.processTimers (node:internal/timers:512:7)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Get all notifications of a user by id" timestamp="2024-01-02T15:56:42" tests="2" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/users.test.js" time="4.007" failures="2">
+    <testcase name="Get all notifications of a user by id Should return all notifications of a specific user when it exists" time="2.003" classname="Should return all notifications of a specific user when it exists">
+      <failure message="Timeout of 2000ms exceeded. For async tests and hooks, ensure &quot;done()&quot; is called; if returning a Promise, ensure it resolves. (/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/users.test.js)" type="Error"><![CDATA[Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves. (/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/users.test.js)
+    at listOnTimeout (node:internal/timers:569:17)
+    at process.processTimers (node:internal/timers:512:7)]]></failure>
+    </testcase>
+    <testcase name="Get all notifications of a user by id Should return 404 when the user does not exist" time="2.003" classname="Should return 404 when the user does not exist">
+      <failure message="Timeout of 2000ms exceeded. For async tests and hooks, ensure &quot;done()&quot; is called; if returning a Promise, ensure it resolves. (/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/users.test.js)" type="Error"><![CDATA[Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves. (/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/users.test.js)
+    at listOnTimeout (node:internal/timers:569:17)
+    at process.processTimers (node:internal/timers:512:7)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Get all appointments of a user by id" timestamp="2024-01-02T15:56:46" tests="2" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/users.test.js" time="0.029" failures="2">
+    <testcase name="Get all appointments of a user by id Should return all appointments of a specific user when it exists" time="0.010" classname="Should return all appointments of a specific user when it exists">
+      <failure message="expected { Object (_events, _eventsCount, ...) } to have status code 200 but got 500" type="AssertionError"><![CDATA[AssertionError: expected { Object (_events, _eventsCount, ...) } to have status code 200 but got 500
+    at file:///mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/users.test.js:88:37
+    at Request.callback (node_modules/superagent/lib/node/index.js:857:12)
+    at IncomingMessage.<anonymous> (node_modules/superagent/lib/node/index.js:1070:18)
+    at IncomingMessage.emit (node:events:529:35)
+    at endReadableNT (node:internal/streams/readable:1368:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+
+      + expected - actual
+
+      -500
+      +200
+      ]]></failure>
+    </testcase>
+    <testcase name="Get all appointments of a user by id Should return 404 when the user does not exist" time="0.015" classname="Should return 404 when the user does not exist">
+      <failure message="expected { Object (_events, _eventsCount, ...) } to have status code 404 but got 500" type="AssertionError"><![CDATA[AssertionError: expected { Object (_events, _eventsCount, ...) } to have status code 404 but got 500
+    at file:///mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/users.test.js:99:37
+    at Request.callback (node_modules/superagent/lib/node/index.js:857:12)
+    at IncomingMessage.<anonymous> (node_modules/superagent/lib/node/index.js:1070:18)
+    at IncomingMessage.emit (node:events:529:35)
+    at endReadableNT (node:internal/streams/readable:1368:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+
+      + expected - actual
+
+      -500
+      +404
+      ]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Login a  user" timestamp="2024-01-02T15:56:46" tests="1" file="/mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/users.test.js" time="0.167" failures="1">
+    <testcase name="Login a  user Should return status 200 when the user is successfully logged in" time="0.164" classname="Should return status 200 when the user is successfully logged in">
+      <failure message="expected { user: { …(4) }, …(2) } to have property &apos;username&apos;" type="AssertionError"><![CDATA[AssertionError: expected { user: { …(4) }, …(2) } to have property 'username'
+    at file:///mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/tests/users.test.js:117:42
+    at Request.callback (node_modules/superagent/lib/node/index.js:857:12)
+    at /mnt/c/Users/Acer/uni/entoothiast/entoothiast/api-gateway/node_modules/superagent/lib/node/index.js:1070:18
+    at IncomingMessage.<anonymous> (node_modules/superagent/lib/node/parsers/json.js:21:7)
+    at IncomingMessage.emit (node:events:529:35)
+    at endReadableNT (node:internal/streams/readable:1368:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

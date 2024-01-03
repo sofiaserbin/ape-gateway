@@ -23,7 +23,7 @@ router.get("/", (req, res, next) => {
             req.mqttResponse = payload;
             return next();
         },
-        JSON.stringify(queryParams)
+        JSON.stringify({ ...queryParams, token: req.token })
     );
 });
 

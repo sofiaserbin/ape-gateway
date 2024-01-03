@@ -10,16 +10,16 @@ import { mqttReq } from "../../index.js";
  * @return {object} 400 - Bad request response
  */
 router.post("/", async (req, res, next) => {
-  
+
     mqttReq.request(
-      "v1/appointments/create",
-      (payload) => {
-        req.mqttResponse = payload
-        return next()
-      },
-      JSON.stringify(req.body)
+        "v1/appointments/create",
+        (payload) => {
+            req.mqttResponse = payload
+            return next()
+        },
+        JSON.stringify({ body: req.body, token: req.token} )
     )
-  })
+})
 
 
 /**
@@ -30,48 +30,30 @@ router.post("/", async (req, res, next) => {
  * @return {object} 404 - appointment id not found
  */
 router.get("/:appointmentId", async (req, res, next) => {
-  let user_token = '';
-    console.log(req.get("Authorization"))
-    if (req.get("Authorization")) {
-        const authHeader = req.get("Authorization");
-        console.log(authHeader)
-        user_token = authHeader.split(' ')[1];
-    }
-
     mqttReq.request("v1/appointments/read",
-    (payload) => {
-      req.mqttResponse = payload
-      return next()
-    },
-    JSON.stringify({appointmentId: req.params.appointmentId, token: user_token})
+        (payload) => {
+            req.mqttResponse = payload
+            return next()
+        },
+        JSON.stringify({ appointmentId: req.params.appointmentId, token: req.token })
     )
-    
-  });
+});
 
-  /**
- * Get /v1/appointments
- * @summary Returns all appointments
- * @tags appointments
- * @return {object} 200 - Success response
- */
+/**
+* Get /v1/appointments
+* @summary Returns all appointments
+* @tags appointments
+* @return {object} 200 - Success response
+*/
 router.get("/", async (req, res, next) => {
-  let dentist_token = '';
-    console.log(req.get("Authorization"))
-    if (req.get("Authorization")) {
-        const authHeader = req.get("Authorization");
-        console.log(authHeader)
-        dentist_token = authHeader.split(' ')[1];
-        console.log(dentist_token)
-    }
+    mqttReq.request("v1/appointments/all",
+        (payload) => {
+            req.mqttResponse = payload
+            return next()
+        },
+        JSON.stringify({ token: req.token })
+    )
 
-  mqttReq.request("v1/appointments/all",
-  (payload) => {
-    req.mqttResponse = payload
-    return next()
-  },
-  JSON.stringify({token: dentist_token})
-  )
-  
 });
 
 /**
@@ -82,20 +64,13 @@ router.get("/", async (req, res, next) => {
  * @return {object} 404 - appointment id not found
  */
 router.patch("/:appointmentId", async (req, res, next) => {
-  let user_token = '';
-    console.log(req.get("Authorization"))
-    if (req.get("Authorization")) {
-        const authHeader = req.get("Authorization");
-        console.log(authHeader)
-        user_token = authHeader.split(' ')[1];
-    }
     mqttReq.request(
         "v1/appointments/update",
         (responsePayload) => {
             req.mqttResponse = responsePayload;
             return next();
         },
-        JSON.stringify({appointmentId: req.params.appointmentId, requestBody: req.body, token: user_token})
+        JSON.stringify({ appointmentId: req.params.appointmentId, requestBody: req.body, token: req.token })
     );
 });
 
