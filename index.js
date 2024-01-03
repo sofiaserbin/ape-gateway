@@ -56,6 +56,17 @@ const options = {
 
 expressJSDocSwagger(app)(options);
 
+app.use((req, res, next) => {
+    if (req.get("Authorization")) {
+        const authHeader = req.get("Authorization");
+        if (authHeader.split(' ').length > 1 && authHeader.split(' ')[0] === 'Bearer') {
+            req.token = authHeader.split(' ')[1];
+        }
+    }
+
+    next()
+})
+
 app.use("/v1/clinics", clinicsRouter);
 app.use("/v1/users", userRouter);
 app.use("/v1/timeslots", timeslotRouter);
@@ -64,19 +75,8 @@ app.use("/v1/dentists", dentistRouter)
 app.use("/v1/logs", logsRouter)
 
 app.get('/', (req, res) => {
-    return res.send('Hi from api-gateway')
+    return res.send('API-Gateway running')
 })
-
-app.get("/demo", (req, res) => {
-    mqttReq.request("demo", // topic "demo"
-        // callback that is called when the other serice replies
-        (payload) => {
-            return res.send(payload)
-        },
-        // payload that is sent to the other service
-        JSON.stringify({ message: "Hi from API-Gateway..." }))
-})
-
 
 app.use(function (err, req, res, next) {
     console.error(err.stack);
