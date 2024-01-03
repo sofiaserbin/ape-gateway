@@ -24,7 +24,7 @@ router.get("/", async (req, res, next) => {
             req.mqttResponse = payload
             return next()
         },
-        JSON.stringify({startTime: req.query.startTime})
+        JSON.stringify({ startTime: req.query.startTime, token: req.token })
     )
 })
 

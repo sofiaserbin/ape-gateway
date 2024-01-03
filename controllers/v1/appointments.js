@@ -30,20 +30,13 @@ router.post("/", async (req, res, next) => {
  * @return {object} 404 - appointment id not found
  */
 router.get("/:appointmentId", async (req, res, next) => {
-    let user_token = '';
-    if (req.get("Authorization")) {
-        const authHeader = req.get("Authorization");
-        user_token = authHeader.split(' ')[1];
-    }
-
     mqttReq.request("v1/appointments/read",
         (payload) => {
             req.mqttResponse = payload
             return next()
         },
-        JSON.stringify({ appointmentId: req.params.appointmentId, token: user_token })
+        JSON.stringify({ appointmentId: req.params.appointmentId, token: req.token })
     )
-
 });
 
 /**
@@ -53,18 +46,12 @@ router.get("/:appointmentId", async (req, res, next) => {
 * @return {object} 200 - Success response
 */
 router.get("/", async (req, res, next) => {
-    let dentist_token = '';
-    if (req.get("Authorization")) {
-        const authHeader = req.get("Authorization");
-        dentist_token = authHeader.split(' ')[1];
-    }
-
     mqttReq.request("v1/appointments/all",
         (payload) => {
             req.mqttResponse = payload
             return next()
         },
-        JSON.stringify({ token: dentist_token })
+        JSON.stringify({ token: req.token })
     )
 
 });
@@ -77,20 +64,13 @@ router.get("/", async (req, res, next) => {
  * @return {object} 404 - appointment id not found
  */
 router.patch("/:appointmentId", async (req, res, next) => {
-    let user_token = '';
-    console.log(req.get("Authorization"))
-    if (req.get("Authorization")) {
-        const authHeader = req.get("Authorization");
-        console.log(authHeader)
-        user_token = authHeader.split(' ')[1];
-    }
     mqttReq.request(
         "v1/appointments/update",
         (responsePayload) => {
             req.mqttResponse = responsePayload;
             return next();
         },
-        JSON.stringify({ appointmentId: req.params.appointmentId, requestBody: req.body, token: user_token })
+        JSON.stringify({ appointmentId: req.params.appointmentId, requestBody: req.body, token: req.token })
     );
 });
 
