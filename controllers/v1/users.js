@@ -1,5 +1,6 @@
 import express from "express"
 import { mqttReq } from "../../index.js";
+
 const router = express.Router();
 
 // TODO:
@@ -12,7 +13,7 @@ const router = express.Router();
  */
 router.get("/:userId", async (req, res, next) => {
     mqttReq.request(
-        "v1/users/:userId",
+        "v1/users/:userId/read",
         (payload) => {
             req.mqttResponse = payload
             return next()
@@ -21,6 +22,24 @@ router.get("/:userId", async (req, res, next) => {
     )
 });
 
+/**
+ * Patch /v1/users/{userId}
+ * @summary Updates user by id
+ * @tags users
+ * @return {object} 200 - Success response
+ * @return {object} 404 - user id not found
+ */
+router.patch("/:userId", async (req, res, next) => {
+  mqttReq.request(
+    "v1/users/update",
+    (responsePayload) => {
+      console.log('API Gateway Response Payload:', responsePayload);
+      req.mqttResponse = responsePayload;
+      return next();
+    },
+    JSON.stringify({ userId: req.params.userId, requestBody: req.body})
+  );
+});
 
 // TODO:
 /**
@@ -32,7 +51,7 @@ router.get("/:userId", async (req, res, next) => {
 */
 router.get("/:userId/notifications", async (req, res, next) => {
     mqttReq.request(
-        "v1/users/:userId/notifications",
+        "v1/users/:userId/notifications/read",
         (payload) => {
             req.mqttResponse = payload
             return next()
@@ -49,9 +68,9 @@ router.get("/:userId/notifications", async (req, res, next) => {
  * @return {object} 200 - Success response
  * @return {object} 404 - user id not found
  */
-router.get("/v1/users/:userId/appointments", async (req, res) => {
+router.get("/:userId/appointments", async (req, res, next) => {
     mqttReq.request(
-        "v1/users/:userId/appointments",
+        "v1/users/:userId/appointments/read",
         (payload) => {
             req.mqttResponse = payload
             return next()
