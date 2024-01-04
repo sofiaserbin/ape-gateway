@@ -30,13 +30,6 @@ router.get("/:userId", async (req, res, next) => {
  * @return {object} 404 - user id not found
  */
 router.patch("/:userId", async (req, res, next) => {
-  const payload = {
-    userId: req.params.userId,
-    requestBody: req.body
-  };
-
-  console.log('API Gateway Request Payload:', payload);
-
   mqttReq.request(
     "v1/users/update",
     (responsePayload) => {
@@ -44,11 +37,9 @@ router.patch("/:userId", async (req, res, next) => {
       req.mqttResponse = responsePayload;
       return next();
     },
-    JSON.stringify(payload)
+    JSON.stringify({ userId: req.params.userId, requestBody: req.body})
   );
 });
-
-
 
 // TODO:
 /**
