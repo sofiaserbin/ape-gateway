@@ -13,7 +13,7 @@ const router = express.Router();
  */
 router.get("/:userId", async (req, res, next) => {
     mqttReq.request(
-        "v1/users/:userId",
+        "v1/users/:userId/read",
         (payload) => {
             req.mqttResponse = payload
             return next()
