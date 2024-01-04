@@ -51,7 +51,7 @@ router.patch("/:userId", async (req, res, next) => {
 */
 router.get("/:userId/notifications", async (req, res, next) => {
     mqttReq.request(
-        "v1/users/:userId/notifications",
+        "v1/users/:userId/notifications/read",
         (payload) => {
             req.mqttResponse = payload
             return next()
@@ -68,9 +68,9 @@ router.get("/:userId/notifications", async (req, res, next) => {
  * @return {object} 200 - Success response
  * @return {object} 404 - user id not found
  */
-router.get("/v1/users/:userId/appointments", async (req, res) => {
+router.get("/:userId/appointments", async (req, res, next) => {
     mqttReq.request(
-        "v1/users/:userId/appointments",
+        "v1/users/:userId/appointments/read",
         (payload) => {
             req.mqttResponse = payload
             return next()
