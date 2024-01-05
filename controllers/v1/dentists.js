@@ -87,19 +87,12 @@ router.post("/timeslots", (req, res, next) => {
  * @return {object} 404 - Dentist id not found
  */
 router.get("/:dentistId/timeslots", (req, res, next) => {
-    let dentist_token = '';
-    console.log(req.get("Authorization"))
-    if (req.get("Authorization")) {
-        const authHeader = req.get("Authorization");
-        console.log(authHeader)
-        dentist_token = authHeader.split(' ')[1];
-    }
     mqttReq.request("v1/dentists/timeslots/read",
         (payload) => {
         req.mqttResponse = payload
         return next()
         },
-    JSON.stringify({dentistId: req.params.dentistId, token: dentist_token})
+    JSON.stringify({dentistId: req.params.dentistId, token: req.token})
     )
     });
 
