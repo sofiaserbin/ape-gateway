@@ -79,4 +79,22 @@ router.post("/timeslots", (req, res, next) => {
     );
 });
 
+/**
+ * Get /v1/dentists/timeslots
+ * @summary Get all timeslots for a dentist
+ * @tags dentists
+ * @return {object} 200 - Success response
+ * @return {object} 404 - Dentist id not found
+ */
+router.get("/:dentistId/timeslots", (req, res, next) => {
+    mqttReq.request("v1/dentists/timeslots/read",
+        (payload) => {
+        req.mqttResponse = payload
+        return next()
+        },
+    JSON.stringify({dentistId: req.params.dentistId, token: req.token})
+    )
+    });
+
+
 export default router
