@@ -10,15 +10,16 @@ import { mqttReq } from "../../index.js";
  * @return {object} 400 - Bad request response
  */
 router.post("/", async (req, res, next) => {
+
     mqttReq.request(
-      "v1/appointments/create",
-      (payload) => {
-        req.mqttResponse = payload
-        return next()
-      },
-      JSON.stringify(req.body)
+        "v1/appointments/create",
+        (payload) => {
+            req.mqttResponse = payload
+            return next()
+        },
+        JSON.stringify({ body: req.body, token: req.token} )
     )
-  })
+})
 
 
 /**
@@ -30,14 +31,30 @@ router.post("/", async (req, res, next) => {
  */
 router.get("/:appointmentId", async (req, res, next) => {
     mqttReq.request("v1/appointments/read",
-    (payload) => {
-      req.mqttResponse = payload
-      return next()
-    },
-    JSON.stringify({appointmentId: req.params.appointmentId})
+        (payload) => {
+            req.mqttResponse = payload
+            return next()
+        },
+        JSON.stringify({ appointmentId: req.params.appointmentId, token: req.token })
     )
-    
-  });
+});
+
+/**
+* Get /v1/appointments
+* @summary Returns all appointments
+* @tags appointments
+* @return {object} 200 - Success response
+*/
+router.get("/", async (req, res, next) => {
+    mqttReq.request("v1/appointments/all",
+        (payload) => {
+            req.mqttResponse = payload
+            return next()
+        },
+        JSON.stringify({ token: req.token })
+    )
+
+});
 
 /**
  * Patch /v1/appointments/{appointmentId}
@@ -47,17 +64,13 @@ router.get("/:appointmentId", async (req, res, next) => {
  * @return {object} 404 - appointment id not found
  */
 router.patch("/:appointmentId", async (req, res, next) => {
-    const payload = {
-        appointmentId: req.params.appointmentId,
-        requestBody: req.body
-    };
     mqttReq.request(
         "v1/appointments/update",
         (responsePayload) => {
             req.mqttResponse = responsePayload;
             return next();
         },
-        JSON.stringify(payload)
+        JSON.stringify({ appointmentId: req.params.appointmentId, requestBody: req.body, token: req.token })
     );
 });
 
