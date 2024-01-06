@@ -80,6 +80,24 @@ router.post("/timeslots", (req, res, next) => {
 });
 
 /**
+ * Patch /v1/dentists/{userId}
+ * @summary Updates dentist by id
+ * @tags dentists
+ * @return {object} 200 - Success response
+ * @return {object} 404 - user id not found
+ */
+router.patch("/:userId", async (req, res, next) => {
+    mqttReq.request(
+      "v1/dentists/update",
+      (responsePayload) => {
+        req.mqttResponse = responsePayload;
+        return next();
+      },
+      JSON.stringify({ userId: req.params.userId, requestBody: req.body})
+    );
+  });
+
+/**
  * Get /v1/dentists/timeslots
  * @summary Get all timeslots for a dentist
  * @tags dentists
