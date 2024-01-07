@@ -12,6 +12,7 @@ import { options } from "./middleware/swagger.js"
 import cors from "cors"
 import clinicsRouter from "./controllers/v1/clinics.js"
 import appointmentsRouter from "./controllers/v1/appointments.js"
+import statisticsRouter from "./controllers/v1/statistics.js"
 import parseAuthHeader from "./middleware/parse-auth-header.js";
 import errorHandler from "./middleware/error-handler.js";
 import mqttResponseIntegrationHandler from "./middleware/mqtt-response-integration.js";
@@ -26,7 +27,6 @@ app.use(cors());
 expressJSDocSwagger(app)(options); // swagger api docs
 app.use(parseAuthHeader) // custom middleware to put auth token in req.token
 
-
 app.get('/', (_, res) => res.send('API-Gateway running'))
 app.use("/v1/clinics", clinicsRouter);
 app.use("/v1/users", userRouter);
@@ -34,7 +34,7 @@ app.use("/v1/timeslots", timeslotRouter);
 app.use("/v1/appointments", appointmentsRouter);
 app.use("/v1/dentists", dentistRouter)
 app.use("/v1/logs", logsRouter)
-
+app.use("/v1/statistics", statisticsRouter)
 
 app.use(errorHandler);
 app.use(mqttResponseIntegrationHandler)
