@@ -12,6 +12,7 @@ import { options } from "./middleware/swagger.js"
 import cors from "cors"
 import clinicsRouter from "./controllers/v1/clinics.js"
 import appointmentsRouter from "./controllers/v1/appointments.js"
+import statisticsRouter from "./controllers/v1/statistics.js"
 import parseAuthHeader from "./middleware/parse-auth-header.js";
 import errorHandler from "./middleware/error-handler.js";
 import mqttResponseIntegrationHandler from "./middleware/mqtt-response-integration.js";
@@ -34,6 +35,7 @@ app.use("/v1/timeslots", timeslotRouter);
 app.use("/v1/appointments", appointmentsRouter);
 app.use("/v1/dentists", dentistRouter)
 app.use("/v1/logs", logsRouter)
+app.use("/v1/statistics", statisticsRouter)
 
 
 app.use(errorHandler);

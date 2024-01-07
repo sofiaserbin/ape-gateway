@@ -3,7 +3,7 @@
 const mqttResponseIntegrationHandler = (req, res, next) => {
     if (!req.mqttResponse) {
         console.log("Skipping middleware; no mqttResponse set on req")
-        return res.status(500).send()
+        return res.status(404).send()
     }
     const payload = JSON.parse(req.mqttResponse)
     const httpStatus = payload.httpStatus || 200
