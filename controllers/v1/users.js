@@ -2,6 +2,9 @@ import express from "express"
 import { mqttReq } from "../../index.js";
 
 const router = express.Router();
+/**
+ * @typedef AppointmentsQueryParams
+ */
 
 // TODO:
 /**
@@ -83,6 +86,7 @@ router.patch("/:userId/notifications", async (req, res, next) => {
  * Get /v1/users/{userId}/appointments
  * @summary Returns all appointments of a user by id
  * @tags users
+ * @param {AppointmentsQueryParams} query.timespan - all appointments before or later then the current time
  * @return {object} 200 - Success response
  * @return {object} 404 - user id not found
  */
@@ -93,7 +97,7 @@ router.get("/:userId/appointments", async (req, res, next) => {
             req.mqttResponse = payload
             return next()
         },
-        JSON.stringify(req.params.userId)
+        JSON.stringify({user_id: req.params.userId, timespan: req.query.timespan})
     )
 });
 
