@@ -27,7 +27,6 @@ app.use(cors());
 expressJSDocSwagger(app)(options); // swagger api docs
 app.use(parseAuthHeader) // custom middleware to put auth token in req.token
 
-
 app.get('/', (_, res) => res.send('API-Gateway running'))
 app.use("/v1/clinics", clinicsRouter);
 app.use("/v1/users", userRouter);
@@ -37,13 +36,13 @@ app.use("/v1/dentists", dentistRouter)
 app.use("/v1/logs", logsRouter)
 app.use("/v1/statistics", statisticsRouter)
 
-
 app.use(errorHandler);
 app.use(mqttResponseIntegrationHandler)
 
 
 const client = mqtt.connect(process.env.BROKER_URL)
 MqttRequest.timeout = 5000;
+MqttRequest.publishOptions = { qos: 2 };
 export const mqttReq = new MqttRequest.default(client);
 
 client.on("connect", async () => {
