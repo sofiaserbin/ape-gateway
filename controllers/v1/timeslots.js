@@ -12,7 +12,9 @@ const router = express.Router();
  * Get /v1/timeslots
  * @summary Returns all timeslots sorted ASC by start time
  * @tags timeslots
- * @param {TimeslotsQueryParams} query.start - all timeslots later than this time
+ * @param {TimeslotsQueryParams} query.start_time - all timeslots later than this time
+ * @param {TimeslotsQueryParams} query.clinic - all timeslots at this clinic
+ * @param {TimeslotsQueryParams} query.dentist - all timeslots of this dentist
  * @return {object} 200 - Success response
  * @return {object} 404 - start time not found
  */
@@ -24,7 +26,7 @@ router.get("/", async (req, res, next) => {
             req.mqttResponse = payload
             return next()
         },
-        JSON.stringify({ startTime: req.query.startTime, token: req.token })
+        JSON.stringify({ startTime: req.query.startTime, token: req.token, clinic: req.query.clinic, dentist: req.query.dentist })
     )
 })
 
