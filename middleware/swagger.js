@@ -9,7 +9,7 @@ export const options = {
         title: "Entoothiast",
     },
     baseDir: __dirname,
-    filesPattern: "./**/*.js",
+    filesPattern: "../**/*.js",
     // URL where SwaggerUI will be rendered. Default. /api-docs
     swaggerUIPath: apiDocsRoute,
     exposeSwaggerUI: true,
