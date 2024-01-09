@@ -1,3 +1,4 @@
+/// This contains the configuration for the swagger documentation
 import path from "path"
 import { fileURLToPath } from "url";
 

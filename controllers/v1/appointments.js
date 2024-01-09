@@ -3,24 +3,21 @@ const router = express.Router();
 import { mqttReq } from "../../index.js";
 
 /**
- * Post /v1/appointments
- * @summary Creates a new appointment
- * @tags appointments
- * @return {object} 200 - Success response
- * @return {object} 400 - Bad request response
- */
-router.post("/", async (req, res, next) => {
-
-    mqttReq.request(
-        "v1/appointments/create",
+* Get /v1/appointments
+* @summary Returns all appointments
+* @tags appointments
+* @return {object} 200 - Success response
+*/
+router.get("/", async (req, res, next) => {
+    mqttReq.request("v1/appointments/all",
         (payload) => {
             req.mqttResponse = payload
             return next()
         },
-        JSON.stringify({ body: req.body, token: req.token} )
+        JSON.stringify({ token: req.token })
     )
-})
 
+});
 
 /**
  * Get /v1/appointments/{appointmentId}
@@ -40,21 +37,23 @@ router.get("/:appointmentId", async (req, res, next) => {
 });
 
 /**
-* Get /v1/appointments
-* @summary Returns all appointments
-* @tags appointments
-* @return {object} 200 - Success response
-*/
-router.get("/", async (req, res, next) => {
-    mqttReq.request("v1/appointments/all",
+ * Post /v1/appointments
+ * @summary Creates a new appointment
+ * @tags appointments
+ * @return {object} 200 - Success response
+ * @return {object} 400 - Bad request response
+ */
+router.post("/", async (req, res, next) => {
+    mqttReq.request(
+        "v1/appointments/create",
         (payload) => {
             req.mqttResponse = payload
             return next()
         },
-        JSON.stringify({ token: req.token })
+        JSON.stringify({ body: req.body, token: req.token })
     )
+})
 
-});
 
 /**
  * Patch /v1/appointments/{appointmentId}

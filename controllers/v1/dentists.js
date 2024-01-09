@@ -35,28 +35,23 @@ router.get("/", (req, res, next) => {
     );
 });
 
-
 /**
- * Delete /v1/dentists/timeslots/{timeslotId}
- * @summary Deletes a timeslot by id of a dentist by id
+ * Get /v1/dentists/timeslots
+ * @summary Get all timeslots for a dentist
  * @tags dentists
  * @return {object} 200 - Success response
- * @return {object} 404 - dentist id not found
- * @return {object} 404 - timeslot id not found
+ * @return {object} 404 - Dentist id not found
  */
-router.delete("/timeslots/:timeslotId", (req, res, next) => {
-    mqttReq.request("v1/timeslots/delete",
+router.get("/:dentistId/timeslots", (req, res, next) => {
+    mqttReq.request("v1/dentists/timeslots/read",
         (payload) => {
             req.mqttResponse = payload
             return next()
         },
-        JSON.stringify({
-            dentistId: req.params.dentistId,
-            timeslotId: req.params.timeslotId,
-            token: req.token
-        })
+        JSON.stringify({ dentistId: req.params.dentistId, token: req.token })
     )
 });
+
 
 /**
  * Post /v1/dentists/timeslots
@@ -88,31 +83,36 @@ router.post("/timeslots", (req, res, next) => {
  */
 router.patch("/:userId", async (req, res, next) => {
     mqttReq.request(
-      "v1/dentists/update",
-      (responsePayload) => {
-        req.mqttResponse = responsePayload;
-        return next();
-      },
-      JSON.stringify({ userId: req.params.userId, requestBody: req.body})
+        "v1/dentists/update",
+        (responsePayload) => {
+            req.mqttResponse = responsePayload;
+            return next();
+        },
+        JSON.stringify({ userId: req.params.userId, requestBody: req.body })
     );
-  });
+});
+
 
 /**
- * Get /v1/dentists/timeslots
- * @summary Get all timeslots for a dentist
+ * Delete /v1/dentists/timeslots/{timeslotId}
+ * @summary Deletes a timeslot by id of a dentist by id
  * @tags dentists
  * @return {object} 200 - Success response
- * @return {object} 404 - Dentist id not found
+ * @return {object} 404 - dentist id not found
+ * @return {object} 404 - timeslot id not found
  */
-router.get("/:dentistId/timeslots", (req, res, next) => {
-    mqttReq.request("v1/dentists/timeslots/read",
+router.delete("/timeslots/:timeslotId", (req, res, next) => {
+    mqttReq.request("v1/timeslots/delete",
         (payload) => {
-        req.mqttResponse = payload
-        return next()
+            req.mqttResponse = payload
+            return next()
         },
-    JSON.stringify({dentistId: req.params.dentistId, token: req.token})
+        JSON.stringify({
+            dentistId: req.params.dentistId,
+            timeslotId: req.params.timeslotId,
+            token: req.token
+        })
     )
-    });
-
+});
 
 export default router

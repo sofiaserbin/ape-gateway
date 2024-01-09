@@ -6,7 +6,6 @@ const router = express.Router();
  * @typedef AppointmentsQueryParams
  */
 
-// TODO:
 /**
  * Get /v1/users/{userId}
  * @summary Returns user by id
@@ -23,25 +22,6 @@ router.get("/:userId", async (req, res, next) => {
         },
         JSON.stringify(req.params.userId)
     )
-});
-
-/**
- * Patch /v1/users/{userId}
- * @summary Updates user by id
- * @tags users
- * @return {object} 200 - Success response
- * @return {object} 404 - user id not found
- */
-router.patch("/:userId", async (req, res, next) => {
-    mqttReq.request(
-        "v1/users/update",
-        (responsePayload) => {
-            console.log('API Gateway Response Payload:', responsePayload);
-            req.mqttResponse = responsePayload;
-            return next();
-        },
-        JSON.stringify({ userId: req.params.userId, requestBody: req.body })
-    );
 });
 
 /**
@@ -64,25 +44,6 @@ router.get("/:userId/notifications", async (req, res, next) => {
 });
 
 /**
-* PATCH /v1/users/{userId}/notifications
-* @summary Marks all notifications of a user by id as read
-* @tags users
-* @return {object} 200 - Success response
-* @return {object} 404 - user id not found
-*/
-router.patch("/:userId/notifications", async (req, res, next) => {
-    mqttReq.request(
-        "v1/users/notifications/update",
-        (payload) => {
-            req.mqttResponse = payload
-            return next()
-        },
-        JSON.stringify({ userId: req.params.userId, token: req.token, })
-    )
-});
-
-// TODO:
-/**
  * Get /v1/users/{userId}/appointments
  * @summary Returns all appointments of a user by id
  * @tags users
@@ -97,9 +58,10 @@ router.get("/:userId/appointments", async (req, res, next) => {
             req.mqttResponse = payload
             return next()
         },
-        JSON.stringify({user_id: req.params.userId, timespan: req.query.timespan})
+        JSON.stringify({ user_id: req.params.userId, timespan: req.query.timespan })
     )
 });
+
 
 /**
  * Post /v1/users/login
@@ -136,6 +98,46 @@ router.post("/register", async (req, res, next) => {
     )
 
 });
+
+/**
+ * Patch /v1/users/{userId}
+ * @summary Updates user by id
+ * @tags users
+ * @return {object} 200 - Success response
+ * @return {object} 404 - user id not found
+ */
+router.patch("/:userId", async (req, res, next) => {
+    mqttReq.request(
+        "v1/users/update",
+        (responsePayload) => {
+            console.log('API Gateway Response Payload:', responsePayload);
+            req.mqttResponse = responsePayload;
+            return next();
+        },
+        JSON.stringify({ userId: req.params.userId, requestBody: req.body })
+    );
+});
+
+
+/**
+* PATCH /v1/users/{userId}/notifications
+* @summary Marks all notifications of a user by id as read
+* @tags users
+* @return {object} 200 - Success response
+* @return {object} 404 - user id not found
+*/
+router.patch("/:userId/notifications", async (req, res, next) => {
+    mqttReq.request(
+        "v1/users/notifications/update",
+        (payload) => {
+            req.mqttResponse = payload
+            return next()
+        },
+        JSON.stringify({ userId: req.params.userId, token: req.token, })
+    )
+});
+
+
 
 /**
  * Patch /v1/dentists/{dentistId}/ratings

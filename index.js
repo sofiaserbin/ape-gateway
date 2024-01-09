@@ -40,7 +40,7 @@ app.use(errorHandler);
 app.use(mqttResponseIntegrationHandler)
 
 
-const client = mqtt.connect(process.env.BROKER_URL)
+const client = mqtt.connect(process.env.BROKER_URL, { clean: true })
 MqttRequest.timeout = 5000;
 MqttRequest.publishOptions = { qos: 2 };
 export const mqttReq = new MqttRequest.default(client);
@@ -53,4 +53,10 @@ client.on("connect", async () => {
         console.log(`API-Gateway running on http://localhost:${port}`)
         console.log(`API Docs running on http://localhost:${port}${options.swaggerUIPath}`)
     })
+});
+
+process.on('SIGINT', () => {
+    client.end(); // since we're using a clean session, this unsubscribes from all topics
+    console.log('Disconnected from MQTT broker');
+    process.exit();
 });
