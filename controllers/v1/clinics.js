@@ -78,4 +78,25 @@ router.delete("/:clinicId", async (req, res, next) => {
 
 });
 
+router.get("/:clinicId", async (req, res, next) => {
+    mqttReq.request("v1/clinics/:clinicId/read",
+        (payload) => {
+            req.mqttResponse = payload
+            return next()
+        },
+        JSON.stringify({ clinicId: req.params.clinicId, token: req.token })
+    )
+});
+
+
+router.get("/:clinicId/dentists", async (req, res, next) => {
+    mqttReq.request("v1/clinics/:clinicId/dentists/read",
+        (payload) => {
+            req.mqttResponse = payload
+            return next()
+        },
+        JSON.stringify({ clinicId: req.params.clinicId, token: req.token })
+    )
+});
+
 export default router
