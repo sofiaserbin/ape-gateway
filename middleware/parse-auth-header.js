@@ -1,3 +1,5 @@
+/// This parses the auth token from the request header
+/// and puts it into req.token
 const parseAuthHeader = (req, res, next) => {
     if (req.get("Authorization")) {
         const authHeader = req.get("Authorization");

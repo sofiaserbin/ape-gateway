@@ -5,7 +5,9 @@ const router = express.Router();
 
 /**
  * @typedef TimeslotsQueryParams
- * @property {string} [start] 
+ * @property {string} [start_time] 
+ * @property {string} [clinic] 
+ * @property {string} [dentist] 
  */
 
 /**

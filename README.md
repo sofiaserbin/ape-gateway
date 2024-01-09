@@ -6,6 +6,10 @@ The API-Gateway is the entry point for all requests to the backend services. Tho
 
 Please refer to the entoothiast repository.
 
+## Documentation
+
+You can access the Swagger documentation at [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+
 ## Tests
 
 This repository includes the integration tests, since they're run against the API gateway. The CI configuration can be found in the entoothiast repository (`.gitlab-ci.yml`).
