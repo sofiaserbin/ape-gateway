@@ -2,6 +2,14 @@
 
 The API-Gateway is the entry point for all requests to the backend services. Those requests are then forwarded to the respective (MQTT) services.
 
+## Requirements and setup
+
+Please refer to the entoothiast repository.
+
+## Tests
+
+This repository includes the integration tests, since they're run against the API gateway. The CI configuration can be found in the entoothiast repository (`.gitlab-ci.yml`).
+
 ## Development
 
 Consider the following example:
